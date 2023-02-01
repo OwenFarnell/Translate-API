@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSON Fetching Demo</title>
+</head>
+<body>
+	<form>
+		<center>
+        <h1 style="color:rgb(32, 18, 223);">Translate</h1>
+		<h3 style="color:rgb(36, 36, 36);">Translate to a different language!</h3><br>
+        <div>Text to Translate: </div>
+		<input type = "text" id = "trans"><br>
+        <div>Input Language:</div>
+        <input type = "text" id = "firstWord"><br>
+        <div>Output Language:</div>
+        <input type = "text" id = "secondWord"><br>
+		<input type = "button" id="submitButton" onClick="getTrans()" value = "Submit"><br>
+		<font size="5">
+        <div id="first"></div>
+	</font>
+	</center>
+		
+
+	</form>
+</body>
+</html>
+<script>
+function changeBackground(color) {
+   document.body.style.background = color;
+}
+
+window.addEventListener("load",function() { changeBackground('grey') });
+
+function getTrans(){
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '--------------------------------------------------------',
+		'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com'
+	}
+};
+
+// document.getElementById('submitButton').addEventListener("click");
+
+let Wording = document.getElementById("trans").value;
+let Language = document.getElementById("firstWord").value;
+let LanguageTrans = document.getElementById("secondWord").value;
+
+fetch('https://translated-mymemory---translation-memory.p.rapidapi.com/get?langpair=' + Language + '%7C' + LanguageTrans + '&q=' + Wording + '&mt=1&onlyprivate=0&de=a%40b.c', options)
+	.then((resp) => resp.json())
+	.then(function(data) {
+		
+		console.log(data);
+		document.getElementById("first").innerHTML = "Translation into chosen lan: " + data.responseData.translatedText;
+
+	})
+	.catch(function(error) {
+		console.log(error);
+	})
+
+
+	
+}
+</script>
